@@ -2728,15 +2728,8 @@ class Decoder(nn.Module):
             unet = self.get_unet(unet_number)
 
         self.cuda()
-
-        devices = [module_device(unet) for unet in self.unets]
-        self.unets.cpu()
         unet.cuda()
-
         yield
-
-        for unet, device in zip(self.unets, devices):
-            unet.to(device)
 
     def dynamic_threshold(self, x):
         """ proposed in https://arxiv.org/abs/2205.11487 as an improved clamping in the setting of classifier free guidance """
